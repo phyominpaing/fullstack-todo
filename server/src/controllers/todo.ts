@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { Todo } from "../models/todo.ts";
+import { Todo } from "../models/todo.js";
 
 export const createNewTodo = async (req: Request, res: Response) => {
   const { title } = req.body;

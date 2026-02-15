@@ -1,7 +1,7 @@
-import { connectDB } from './db/index.ts';
+import { connectDB } from './db/index.js';
 import express, { json } from "express";
 import dotenv from "dotenv";
-import todoRoutes from "./routes/todo.ts";
+import todoRoutes from "./routes/todo.js";
 import cors from 'cors';
 
 dotenv.config({
