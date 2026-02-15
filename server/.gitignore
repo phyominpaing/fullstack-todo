@@ -1,14 +1,15 @@
 # dependencies
 node_modules/
 
-# environment variables
+# env files (VERY IMPORTANT)
 .env
+.env.*
 
-# build folders
+# build output
 dist/
-build/
 
 # logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+*.log
+
+# typescript cache
+*.tsbuildinfo
