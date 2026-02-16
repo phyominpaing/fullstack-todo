@@ -61,3 +61,16 @@ export const logoutUser = asyncHandler(async (req: Request, res: Response) => {
 
   res.status(200).json({ message: "User logged out" });
 });
+
+export const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
+  res.status(200).json({
+    message: "User profile fetched",
+  });
+});
+
+export const updateUserProfile = asyncHandler(
+  async (req: Request, res: Response) => {
+    res.status(200).json({
+    message: "Updated user profile fetched",
+  });
+})

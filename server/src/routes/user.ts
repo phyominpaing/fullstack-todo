@@ -1,10 +1,21 @@
 import { Router } from "express";
-import { loginUser, logoutUser, registerUser } from "../controllers/user.ts";
+import {
+  getUserProfile,
+  loginUser,
+  logoutUser,
+  registerUser,
+  updateUserProfile,
+} from "../controllers/user.ts";
+import { protect } from "../middlewares/authMiddleware.ts";
 
 const router = Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/logout", logoutUser);
+router.delete("/logout", logoutUser);
+// router.put("/profile", updateUserProfile);
+// router.get("/profile", getUserProfile);
+
+router.route("/profile").put(updateUserProfile).get( protect , getUserProfile);
 
 export default router;
