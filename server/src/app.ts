@@ -1,7 +1,8 @@
-import { connectDB } from './db/index.js';
+import { connectDB } from './db/index.ts';
 import express, { json } from "express";
 import dotenv from "dotenv";
-import todoRoutes from "./routes/todo.js";
+import todoRoutes from "./routes/todo.ts";
+import userRoutes from "./routes/user.ts";
 import cors from 'cors';
 
 dotenv.config({
@@ -14,7 +15,8 @@ app.use(cors({
 }))
 app.use(json());
 
-app.use(todoRoutes)
+app.use(userRoutes);
+app.use(todoRoutes);
 
 const PORT = process.env.PORT || "4000";
 app.listen(PORT, () => {

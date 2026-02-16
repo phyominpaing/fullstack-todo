@@ -5,7 +5,7 @@ import {
   getTodo,
   getTodos,
   updateTodo,
-} from "../controllers/todo.js";
+} from "../controllers/todo.ts";
 
 const router = Router();
 
