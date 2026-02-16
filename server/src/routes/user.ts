@@ -16,6 +16,9 @@ router.delete("/logout", logoutUser);
 // router.put("/profile", updateUserProfile);
 // router.get("/profile", getUserProfile);
 
-router.route("/profile").put(updateUserProfile).get( protect , getUserProfile);
+router
+  .route("/profile")
+  .put(protect, updateUserProfile)
+  .get(protect, getUserProfile);
 
 export default router;

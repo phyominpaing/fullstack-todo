@@ -42,6 +42,7 @@ const protect = asyncHandler(
         req.user = (await User.findById(decoded.userId).select(
           "-password",
         )) as User;
+        
         next();
       } catch (error) {
         res.status(401);
