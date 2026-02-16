@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import todoRoutes from "./routes/todo.ts";
 import userRoutes from "./routes/user.ts";
 import cors from 'cors';
+import errorHandler from './middlewares/errorHandler.ts';
 
 dotenv.config({
   path: ".env",
@@ -17,6 +18,8 @@ app.use(json());
 
 app.use(userRoutes);
 app.use(todoRoutes);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || "4000";
 app.listen(PORT, () => {
