@@ -64,11 +64,15 @@ const NoteList = () => {
         {notes.map((note) => (
           <li key={note._id} className="flex items-center gap-2 mb-2">
             <p className="font-semibold">{note.title}</p>
-            <button className="text-red-600 underline font-medium" type="button" onClick={() => handleDeleteNote(note._id)}>
+            <button
+              className="text-red-600 underline font-medium"
+              type="button"
+              onClick={() => handleDeleteNote(note._id)}
+            >
               Delete{" "}
             </button>{" "}
             <button
-            className="underline font-medium"
+              className="underline font-medium"
               onClick={() => handleModeChange(note._id, note.title)}
               type="button"
             >
@@ -77,7 +81,7 @@ const NoteList = () => {
           </li>
         ))}
       </ul>
-      <form  onSubmit={submitHandler} action="">
+      <form onSubmit={submitHandler} action="">
         <input
           type="text"
           name="title"
