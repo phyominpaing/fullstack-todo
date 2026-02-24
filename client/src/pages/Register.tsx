@@ -1,21 +1,18 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import * as z from "zod";
+import type z from "zod";
+import { registerSchema } from "../schema/register";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-
-const schema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters long"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
-});
-
-type FormInputs = {
-  name: string;
-  email: string;
-  password: string;
-};
+type FormInputs = z.infer<typeof registerSchema>;
 
 const Register = () => {
-  const { register, handleSubmit } = useForm<FormInputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormInputs>({
+    resolver: zodResolver(registerSchema),
+  });
 
   const submit: SubmitHandler<FormInputs> = (data) => {
     console.log(data);
@@ -32,24 +29,22 @@ const Register = () => {
           <label className="block mb-1 text-sm text-gray-500" htmlFor="name">
             Name
           </label>
-          <input
-            {...register("name", { required: "Name is required" })}
-            className="form"
-            type="text"
-            id="name"
-          />
-          {/* {errors.name && <p className="text-red-500">{errors.name.message}</p>} */}
+          <input {...register("name")} className="form" type="text" id="name" />
+          {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
         </div>
         <div>
           <label className="block mb-1 text-sm text-gray-500" htmlFor="email">
             Email
           </label>
           <input
-            {...register("email", { required: "Email is required" })}
+            {...register("email")}
             className="form"
             type="email"
             id="email"
           />
+          {errors.email && (
+            <span className="text-red-500 text-sm">{errors.email.message}</span>
+          )}
         </div>
         <div>
           <label
@@ -59,13 +54,17 @@ const Register = () => {
             Password
           </label>
           <input
-            {...register("password", { required: "Password is required" })}
+            {...register("password")}
             className="form"
             type="password"
             id="password"
           />
+          {errors.password && (
+            <span className="text-red-500 text-sm">{errors.password.message}</span>
+          )}
         </div>
         <button
+          disabled={isSubmitting}
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
