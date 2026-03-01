@@ -20,7 +20,7 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const submit: SubmitHandler<FormInputs> = async (data) => {
     try {
