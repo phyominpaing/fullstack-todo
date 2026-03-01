@@ -50,7 +50,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
     });
   } else {
     res.status(401);
-    throw new Error("Invaild credentials.");
+    throw new Error("Invalid email or password");
   }
 });
 
