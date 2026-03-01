@@ -3,33 +3,46 @@ import type z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schema/login";
 import { useLoginMutation } from "../slices/userApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../slices/auth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import type { RootState } from "../store";
 
 type FormInputs = z.infer<typeof loginSchema>;
 
 const Login = () => {
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<FormInputs>({
     resolver: zodResolver(loginSchema),
   });
 
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
 
   const submit: SubmitHandler<FormInputs> = async (data) => {
     try {
       const res = await login(data).unwrap();
       dispatch(setUserInfo(res));
-    } catch (err : any) {
-      console.error(err?.data?.message || err?.error);
+      reset();
+      navigate("/");
+      toast.success("Login successful");
+    } catch (err: any) {
+      toast.error(err?.data?.message);
     }
   };
+
+  useEffect(() => {
+    if (userInfo) navigate("/");
+  }, [navigate, userInfo]);
 
   return (
     <div className="max-w-md mx-auto border p-4 mt-20">
@@ -72,7 +85,7 @@ const Login = () => {
           )}
         </div>
         <button
-          disabled={isSubmitting}
+          disabled={isSubmitting || isLoading}
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
