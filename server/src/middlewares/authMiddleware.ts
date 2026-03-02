@@ -21,7 +21,7 @@ interface User {
 
 const protect = asyncHandler(
   async (req: AuthRequest, res: Response, next: NextFunction) => {
-    let token = req.cookies.token;
+    let token = req.cookies?.token;
 
     if (!token) {
       res.status(401);
@@ -42,11 +42,12 @@ const protect = asyncHandler(
         req.user = (await User.findById(decoded.userId).select(
           "-password",
         )) as User;
-        
+
         next();
       } catch (error) {
-        res.status(401);
-        throw new Error("Unauthorized user. Invalid token.");
+        res.status(401).json({
+          message: "Unauthorized. Invalid token.",
+        });
       }
     }
   },

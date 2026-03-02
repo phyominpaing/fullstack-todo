@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { createNote, deleteNote, getNotes, updateNote } from "../services/note";
 import type { Note } from "../types/note";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store";
+import { Link } from "react-router-dom";
 
 const NoteList = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -8,6 +11,8 @@ const NoteList = () => {
   const [refresh, setRefresh] = useState<boolean>(false);
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState("");
+
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
 
   const makeRefresh = () => {
     setRefresh(!refresh);
@@ -64,39 +69,55 @@ const NoteList = () => {
         {notes.map((note) => (
           <li key={note._id} className="flex items-center gap-2 mb-2">
             <p className="font-semibold">{note.title}</p>
-            <button
-              className="text-red-600 underline font-medium"
-              type="button"
-              onClick={() => handleDeleteNote(note._id)}
-            >
-              Delete{" "}
-            </button>{" "}
-            <button
-              className="underline font-medium"
-              onClick={() => handleModeChange(note._id, note.title)}
-              type="button"
-            >
-              Edit
-            </button>
+            {note.userId === userInfo?._id && (
+              <>
+                <button
+                  className="text-red-600 underline font-medium"
+                  type="button"
+                  onClick={() => handleDeleteNote(note._id)}
+                >
+                  Delete{" "}
+                </button>{" "}
+                <button
+                  className="underline font-medium"
+                  onClick={() => handleModeChange(note._id, note.title)}
+                  type="button"
+                >
+                  Edit
+                </button>
+              </>
+            )}
           </li>
         ))}
       </ul>
-      <form onSubmit={submitHandler} action="">
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value={msg}
-          onChange={(e) => setMsg(e.target.value)}
-          className="border p-2 rounded-lg mr-2"
-        />
-        <button
-          className=" text-white bg-black py-2 px-4 rounded-md border-2"
-          type="submit"
-        >
-          {editMode ? "Update" : "Create"}
-        </button>
-      </form>
+      <>
+        {userInfo ? (
+          <form onSubmit={submitHandler} action="">
+            <input
+              type="text"
+              name="title"
+              id="title"
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
+              className="border p-2 rounded-lg mr-2"
+            />
+            <button
+              className=" text-white bg-black py-2 px-4 rounded-md border-2"
+              type="submit"
+            >
+              {editMode ? "Update" : "Create"}
+            </button>
+          </form>
+        ) : (
+          <p className="text-red-600 text-2xl border-2 px-4 py-2 w-fit">
+            Please{" "}
+            <Link className="underline font-semibold" to="/login">
+              Login
+            </Link>{" "}
+            to create notes
+          </p>
+        )}
+      </>
     </div>
   );
 };
