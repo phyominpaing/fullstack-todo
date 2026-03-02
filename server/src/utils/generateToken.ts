@@ -10,7 +10,7 @@ const generateToken = (res: Response, userId: Types.ObjectId) => {
   res.cookie("token", token, {
     httpOnly: true, // accessible only by the web server
     secure: process.env.NODE_ENV === "production", // https
-    sameSite: "strict", // cookie sent only when the request is made by the same site (csrf)
+    sameSite: "none", // cookie sent only when the request is made by the same site (csrf)
     maxAge: 7 * 24 * 60 * 60 * 1000, // cookie expires in 7 days
   });
 };
