@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import type { JwtPayload } from "jsonwebtoken";
 import type { NextFunction, Request, Response } from "express";
-import asyncHandler from "../utils/asyncHandler.ts";
-import { User } from "../models/user.ts";
+import asyncHandler from "../utils/asyncHandler";
+import { User } from "../models/user";
 import { Types } from "mongoose";
 
 export interface AuthRequest extends Request {

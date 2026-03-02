@@ -1,8 +1,8 @@
 import type { NextFunction, Response } from "express";
-import asyncHandler from "../utils/asyncHandler.ts";
-import type { AuthRequest } from "../middlewares/authMiddleware.ts";
+import asyncHandler from "../utils/asyncHandler";
+import type { AuthRequest } from "../middlewares/authMiddleware";
 
-import { Todo } from "../models/todo.ts";
+import { Todo } from "../models/todo";
 
 const authorizeOwner = asyncHandler(
   async (req: AuthRequest, res: Response, next: NextFunction) => {

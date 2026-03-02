@@ -5,9 +5,9 @@ import {
   getTodo,
   getTodos,
   updateTodo,
-} from "../controllers/todo.ts";
-import { protect } from "../middlewares/authMiddleware.ts";
-import { authorizeOwner } from "../middlewares/authorizeOwner.ts";
+} from "../controllers/todo";
+import { protect } from "../middlewares/authMiddleware";
+import { authorizeOwner } from "../middlewares/authorizeOwner";
 
 const router = Router();
 

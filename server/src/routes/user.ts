@@ -5,8 +5,8 @@ import {
   logoutUser,
   registerUser,
   updateUserProfile,
-} from "../controllers/user.ts";
-import { protect } from "../middlewares/authMiddleware.ts";
+} from "../controllers/user";
+import { protect } from "../middlewares/authMiddleware";
 
 const router = Router();
 

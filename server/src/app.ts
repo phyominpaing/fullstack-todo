@@ -1,10 +1,10 @@
-import { connectDB } from "./db/index.ts";
+import { connectDB } from "./db/index";
 import express, { json } from "express";
 import dotenv from "dotenv";
-import todoRoutes from "./routes/todo.ts";
-import userRoutes from "./routes/user.ts";
+import todoRoutes from "./routes/todo";
+import userRoutes from "./routes/user";
 import cors from "cors";
-import errorHandler from "./middlewares/errorHandler.ts";
+import errorHandler from "./middlewares/errorHandler";
 import cookieParser from "cookie-parser";
 
 dotenv.config({

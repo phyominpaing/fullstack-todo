@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { Todo } from "../models/todo.ts";
-import type { AuthRequest } from "../middlewares/authMiddleware.ts";
+import { Todo } from "../models/todo";
+import type { AuthRequest } from "../middlewares/authMiddleware";
 
 export const createNewTodo = async (req: AuthRequest, res: Response) => {
   const { title } = req.body;

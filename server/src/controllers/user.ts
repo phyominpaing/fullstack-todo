@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
-import { User } from "../models/user.ts";
-import generateToken from "../utils/generateToken.ts";
-import asyncHandler from "../utils/asyncHandler.ts";
-import type { AuthRequest } from "../middlewares/authMiddleware.ts";
+import { User } from "../models/user";
+import generateToken from "../utils/generateToken";
+import asyncHandler from "../utils/asyncHandler";
+import type { AuthRequest } from "../middlewares/authMiddleware";
 
 export const registerUser = asyncHandler(
   async (req: Request, res: Response) => {
