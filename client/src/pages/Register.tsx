@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 type FormInputs = z.infer<typeof registerSchema>;
 
 const Register = () => {
-  const { 
+  const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
