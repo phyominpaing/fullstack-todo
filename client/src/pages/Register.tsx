@@ -2,20 +2,34 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import type z from "zod";
 import { registerSchema } from "../schema/register";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRegisterMutation } from "../slices/userApi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type FormInputs = z.infer<typeof registerSchema>;
 
 const Register = () => {
-  const {
+  const { 
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<FormInputs>({
     resolver: zodResolver(registerSchema),
   });
 
-  const submit: SubmitHandler<FormInputs> = (data) => {
-    console.log(data);
+  const [registerMutation, { isLoading }] = useRegisterMutation();
+  const navigate = useNavigate();
+
+  const submit: SubmitHandler<FormInputs> = async (data) => {
+    try {
+      await registerMutation(data).unwrap();
+      reset();
+      toast.success("Registration successful");
+      navigate("/login");
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
   };
 
   return (
@@ -30,7 +44,9 @@ const Register = () => {
             Name
           </label>
           <input {...register("name")} className="form" type="text" id="name" />
-          {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
+          {errors.name && (
+            <span className="text-red-500 text-sm">{errors.name.message}</span>
+          )}
         </div>
         <div>
           <label className="block mb-1 text-sm text-gray-500" htmlFor="email">
@@ -60,11 +76,13 @@ const Register = () => {
             id="password"
           />
           {errors.password && (
-            <span className="text-red-500 text-sm">{errors.password.message}</span>
+            <span className="text-red-500 text-sm">
+              {errors.password.message}
+            </span>
           )}
         </div>
         <button
-          disabled={isSubmitting}
+          disabled={isSubmitting || isLoading}
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
